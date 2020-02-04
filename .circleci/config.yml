@@ -5,6 +5,7 @@ jobs:
       - image: circleci/golang:1.12
       - image: circleci/mysql:5.7
         environment:
+          MYSQL_ROOT_USER: root
           MYSQL_ROOT_PASSWORD: rootpw
           MYSQL_DATABASE: test_db
           MYSQL_USER: user
@@ -35,5 +36,7 @@ jobs:
           name: Install MySQL CLI; Import dummy data; run an example query
           command: |
             sudo apt-get install default-mysql-client
+            mysql -h 127.0.0.1 -u root --execute="CREATE USER 'testuser'@'127.0.0.1' IDENTIFIED BY 'testpass';"
+            mysql -h 127.0.0.1 -u root --execute="GRANT ALL PRIVILEGES ON *.* TO 'testuser'@'%';"
             mysql -h 127.0.0.1 -P 3306 -u user -ppassw0rd test_db < ./dummy.sql
             mysql -h 127.0.0.1 -P 3306 -u user -ppassw0rd --execute="SELECT * FROM test_db.Persons"
