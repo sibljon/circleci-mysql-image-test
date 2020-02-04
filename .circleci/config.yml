@@ -34,5 +34,5 @@ jobs:
           name: Install MySQL CLI; Import dummy data; run an example query
           command: |
             sudo apt-get install default-mysql-client
-            mysql -h localhost -u user -ppassw0rd test_db < ./dummy.sql
-            mysql -h localhost -u user -ppassw0rd --execute="SELECT * FROM test_db.Persons"
+            mysql -h localhost -P 3306 -u user -ppassw0rd test_db < ./dummy.sql
+            mysql -h localhost -P 3306 -u user -ppassw0rd --execute="SELECT * FROM test_db.Persons"
