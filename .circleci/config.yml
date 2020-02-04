@@ -7,7 +7,7 @@ jobs:
         environment:
           MYSQL_ROOT_USER: root
           MYSQL_ROOT_PASSWORD: rootpw
-          MYSQL_DATABASE: test_db
+          MYSQL_DATABASE: mysql
       - image: circleci/postgres:9.5-alpine-ram
         environment:
           POSTGRES_USER: test
@@ -36,5 +36,7 @@ jobs:
             sudo apt-get install default-mysql-client
             mysql -h 127.0.0.1 -u root -prootpw --execute="CREATE USER 'testuser'@'%' IDENTIFIED BY 'testpass';"
             mysql -h 127.0.0.1 -u root -prootpw --execute="GRANT ALL PRIVILEGES ON *.* TO 'testuser'@'%';"
+            mysql -h 127.0.0.1 -u root -prootpw --execute="FLUSH PRIVILEGES;"
+            mysql -h 127.0.0.1 -u root -prootpw --execute="CREATE DATABASE test123;"
             mysql -h 127.0.0.1 -P 3306 -u testuser -ptestpass test_db < ./dummy.sql
             mysql -h 127.0.0.1 -P 3306 -u testuser -ptestpass --execute="SELECT * FROM test_db.Persons"
